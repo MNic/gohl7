@@ -56,7 +56,8 @@ func readBuf(reader io.Reader) ([]byte, error) {
 //
 //	\x0b MESSAGE \x1c\x0d
 func Split(buf []byte) [][]byte {
-	msgSep := []byte{'\x1c', '\x0d'}
+	// msgSep := []byte{'\x1c', '\x0d'}
+	msgSep := []byte{'\x0a', '\x0d', '\x1c', '\x0c'}
 	msgs := bytes.Split(buf, msgSep)
 	vmsgs := [][]byte{}
 	for _, msg := range msgs {
