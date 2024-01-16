@@ -1,4 +1,4 @@
-# Go Level 7 [![GoDoc](https://img.shields.io/badge/godoc-reference-blue.svg?style=flat-square)](https://godoc.org/github.com/dshills/golevel7)
+# Go Level 7 [![GoDoc](https://img.shields.io/badge/godoc-reference-blue.svg?style=flat-square)](https://godoc.org/github.com/dshills/gohl7)
 
 ## Overview
 
@@ -16,7 +16,7 @@
 Note: Message building is not currently working for MSH segments. Coming soon...
 
 ## Installation
-	go get github.com/dshills/golevel7
+	go get github.com/dshills/gohl7
 
 ## Usage
 
@@ -41,19 +41,19 @@ type my7 struct {
 	LastName  string `hl7:"PID.5.0"`
 }
 st := my7{}
-msg := golevel7.NewMessage(data.Bytes())
-err := golevel7.Unmarshal(&st)
+msg := gohl7.NewMessage(data.Bytes())
+err := gohl7.Unmarshal(&st)
 ```
 
 ### Generating Sets Of Decoded Messages
 ```go
-msgs, err := golevel7.NewDecoder(reader).Messages()
+msgs, err := gohl7.NewDecoder(reader).Messages()
 ```
 // well suited for single or small sets of messages
 // not well suited for large sets of messages
 
 ```go
-ms:=golevel7.NewMessageScanner(reader)
+ms:=gohl7.NewMessageScanner(reader)
 for ms.Scan() {
 	msg:=ms.Message()
 }
@@ -77,16 +77,16 @@ vals, err := msg.FindAll("PID.11.1")
 		FirstName string `hl7:"PID.5.1"`
 		LastName  string `hl7:"PID.5.0"`
 	}
-	mi := golevel7.MsgInfo{
+	mi := gohl7.MsgInfo{
 		SendingApp:        "MyApp",
 		SendingFacility:   "MyPlace",
 		ReceivingApp:      "EMR",
 		ReceivingFacility: "MedicalPlace",
 		MessageType:       "ORM^001",
 	}
-	msg, err := golevel7.StartMessage(mi)
+	msg, err := gohl7.StartMessage(mi)
 	am := aMsg{FirstName: "Davin", LastName: "Hills"}
-	bstr, err = golevel7.Marshal(msg, &am)
+	bstr, err = gohl7.Marshal(msg, &am)
 
 	// Manually
 
@@ -117,7 +117,7 @@ vals, err := msg.FindAll("PID.11.1")
 		FirstName:         "Davin",
 		LastName:          "Hills",
 	}
-	err := golevel7.NewEncoder(writer).Encode(&my)
+	err := gohl7.NewEncoder(writer).Encode(&my)
 ```
 
 ### Message Validation
@@ -127,12 +127,12 @@ Message validation is accomplished using the IsValid function. Create a slice of
 A number of validation slices are already defined and can be combined to build custom validation criteria. The NewValidMSH24() function is one example. It returns a set of validations for the MSH segment for version 2.4 of the HL7 specification.
 
 ```go
-val := []golevel7.Validation{
+val := []gohl7.Validation{
 	Validation{Location: "MSH.0", VCheck: SpecificValue, Value: "MSH"},
 	Validation{Location: "MSH.1", VCheck: HasValue},
 	Validation{Location: "MSH.2", VCheck: HasValue},
 }
-msg, err := golevel7.NewDecoder(reader).Message()
+msg, err := gohl7.NewDecoder(reader).Message()
 valid, failures := msg.IsValid(val)
 ```
 

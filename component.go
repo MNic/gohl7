@@ -1,11 +1,11 @@
-package golevel7
+package gohl7
 
 import (
 	"fmt"
 	"strings"
 )
 
-//Component is an HL7 component
+// Component is an HL7 component
 type Component struct {
 	SubComponents []SubComponent
 	Value         []rune

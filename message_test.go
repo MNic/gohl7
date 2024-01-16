@@ -1,4 +1,4 @@
-package golevel7
+package gohl7
 
 import (
 	"golang.org/x/net/html/charset"

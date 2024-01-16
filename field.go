@@ -1,10 +1,10 @@
-package golevel7
+package gohl7
 
 import (
 	"fmt"
 	"strings"
 
-	"github.com/mnic/golevel7/internal/commons"
+	"github.com/mnic/gohl7/internal/commons"
 )
 
 // Field is an HL7 field
